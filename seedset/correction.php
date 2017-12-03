@@ -1,4 +1,8 @@
 <?php
+/* 
+ Checks whether the link is already present in whitelist, blacklist or seedset tables
+ @author Chaitali Shah
+*/
 $url_check=$_GET['link'];
 $check="false";
 $con1 = mysql_connect("localhost","Phishsecure")or die("Unable to connect to MySQL");

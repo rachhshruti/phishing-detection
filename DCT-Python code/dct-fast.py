@@ -12,6 +12,12 @@ from PyQt4.QtGui import *
 from PyQt4.QtWebKit import *
 from time import sleep
 import socket
+
+'''
+This class takes a screenshot of a page given the url. It opens the page in background, waits for
+it to load before taking a screenshot.
+@author Shruti Rachh, Mrunal Mahajan, Chaitali Shah
+'''
 class Screenshot(QWebView):
     def __init__(self):
         self.app = QApplication(sys.argv)
@@ -44,6 +50,8 @@ class Screenshot(QWebView):
 
 s = Screenshot()
 count=0
+
+# Extracts the command-line arguments sent from previous phase: url_phase.php
 for arg in sys.argv:
     if arg == "-t":
 	a_link = sys.argv[count+1]
@@ -52,28 +60,29 @@ for arg in sys.argv:
     elif arg == "-s":
         case = sys.argv[count+1]
     count+=1
+
+# If the link contains an IP address, it gets the host name
 if case == "IPcase":
     a_link=socket.gethostbyaddr(a_link)
-#t1=time()
+
 s.capture(a_link,'C:/Python27/fake.png')
 time.sleep(1);
 s.capture(v_link,'C:/Python27/real.png')
-#t2=time()
-#print "time to capture image=",t2-t1
 
+# DCT of real image
 x=Image.open('C:/Python27/real.png')
 x=x.convert('L')
 x1=x.resize((200,200))
 x2=img_as_float(x1)
 finaldct1=dct(dct(x2,type=3,axis=0),type=3,axis=1)
-#print finaldct1
 
+# DCT of fake image
 y=Image.open('C:/Python27/fake.png')
 y=y.convert('L')
 y1=y.resize((200,200))
 y2=img_as_float(y1)
 finaldct2=dct(dct(y2,type=3,axis=0),type=3,axis=1)
-#print finaldct2
 
+# Computes root mean square error which shows how similar the two images are
 rms = sqrt(mean(np.subtract(finaldct1,finaldct2)**2))/ sqrt(mean((finaldct1)**2))
 print rms

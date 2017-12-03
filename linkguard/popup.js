@@ -1,9 +1,16 @@
+/*
+ Gets the links from email, processes it and sends it to the first phase of the algorithm
+ "URL phase"
+ @author Shruti Rachh, Mrunal Mahajan, Chaitali Shah
+*/
 chrome.extension.onRequest.addListener(function(links) 
 {
 	var hr;
 	var s=links.split(" ");
 	var d_url=s[1];
-	if(s[1].indexOf("%") !== -1)	//% is present
+
+	// Checks if the links are encoded
+	if(s[1].indexOf("%") !== -1)
 	{
 		d_url=decode(s[1]);
 		var h="http://";
@@ -47,14 +54,13 @@ chrome.extension.onRequest.addListener(function(links)
 			}
 		}
 	}
-// Create some variables we need to send to our PHP file
+	
+	// Send the links to the first phase of algorithm "URL phase"
     var url = "http://localhost:8081/linkguard/url_phase.php?link="+links;
 	hr.open("GET", url, true);
-	
-// Set content type header information for sending url encoded variables in the request
-   hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+   	hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
     
-	// Access the onreadystatechange event for the XMLHttpRequest object
+	// Gets the response back when it's ready 
     hr.onreadystatechange = function() 
 	{
 	    if(hr.readyState == 4 && hr.status == 200)
@@ -63,12 +69,11 @@ chrome.extension.onRequest.addListener(function(links)
 			document.getElementById('stat').innerHTML=return_data;
 		}
     }
-
-	// Send the data to PHP now
-	hr.send(); // Actually execute the request
+	hr.send();
 	document.getElementById('stat').innerHTML="Processing...";
 });
 
+// Extracts the links from email using send_links script
 window.onload = function() 
 {
 	chrome.windows.getCurrent(function (currentWindow) 

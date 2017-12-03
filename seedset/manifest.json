@@ -7,7 +7,7 @@
 	"version": "1.0.0",
 	"minimum_chrome_version": "16.0.884",
 	"page_action": {
-		"default_icon": "Japan_small_icon.png"
+		"default_icon": "seedset_icon.png"
 	},
   
 	"content_scripts":  [

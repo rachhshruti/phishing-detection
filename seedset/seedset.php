@@ -4,6 +4,7 @@ $url=$_GET['link'];
 $_SESSION['seed_link']=$url; 
 ?>
 
+<!-- Popup window that asks the user to click Yes button on seedset extension, if they trust the site -->
 <body>
 <p align="center" > <font face="Calibri" size="5" leftmargin="30px"><b>Do you trust this site?</b></font></p>
 <p align="center"><font face="Calibri" size="3" color="#FF0000"><i><?php echo $url ?></i></font></p>
@@ -34,7 +35,4 @@ $_SESSION['seed_link']=$url;
 	}
 	</style>
 </form>
-</body> 	 
-
-
-
+</body>

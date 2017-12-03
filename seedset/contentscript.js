@@ -1,3 +1,8 @@
+/*
+ Gets the seedset URL typed in by user and sends it to seedset.php where
+ it is desplayed on the UI
+ @author Shruti Rachh, Mrunal Mahajan, Chaitali Shah
+*/
 if((document.getElementsByTagName("div")[0].innerHTML))
 {
 	chrome.extension.sendRequest("request message", function(links) {
@@ -29,16 +34,13 @@ if((document.getElementsByTagName("div")[0].innerHTML))
 		}
 	}
 	
-// Create some variables we need to send to our PHP file
-var url = "http://localhost:8081/seed/new/correction.php?link="+links;
-hr.open("GET", url, true);	
-
-// Set content type header information for sending url encoded variables in the request
-hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-    
-	hr.send(); // Actually execute the request
+	// Sends the link to correction.php which checks if it is already present in one of whitelist, blacklist or seedset tables
+	var url = "http://localhost:8081/seed/new/correction.php?link="+links;
+	hr.open("GET", url, true);	
+	hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	hr.send();
 	
-	// Access the onreadystatechange event for the XMLHttpRequest object
+	// Sends the link to seedset.php once it is confirmed that it is not present in any of the database tables
     hr.onreadystatechange = function() 
 	{
 	    if(hr.readyState == 4 && hr.status == 200) 
@@ -47,7 +49,6 @@ hr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			if(return_data=="false")
 			{
 				nw=window.open('http://localhost:8081/seed/new/seedset.php?link='+links,'seed','width=400,height=200');
-				//nw.moveTo(300,300);
 			}
 		}
     }	
