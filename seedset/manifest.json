@@ -1,0 +1,23 @@
+{
+	"name": "Seed-set",
+	"description": "checks whether enter is pressed in the address bar",
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"version": "1.0.0",
+	"minimum_chrome_version": "16.0.884",
+	"page_action": {
+		"default_icon": "Japan_small_icon.png"
+	},
+  
+	"content_scripts":  [
+	{
+		"matches": [
+		"https://*/*","http://*/*"
+		],
+		"js": ["contentscript.js"]
+	}
+	],
+  
+	"manifest_version": 2
+}
