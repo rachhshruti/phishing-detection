@@ -1,4 +1,9 @@
-<?php	
+<?php
+/*
+ Inserts the browsed link into seedset database table when the user clicks on Yes button to confirm that
+ the site is trusted
+ @author Mrunal Mahajam
+*/	
 session_start();
 $site= $_SESSION['seed_link'];
 $site="http://".$site;
